@@ -2,7 +2,7 @@
   "name": "express-api",
   "version": "1.0.0",
   "description": "API Restfull com Node e Express",
-  "main": "src/server.js",  
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
@@ -18,6 +18,7 @@
   "author": "Guilherme Vinicius Mello de Lima",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "zod": "^3.22.4"
   }
 }
