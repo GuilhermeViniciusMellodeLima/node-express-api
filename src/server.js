@@ -1,16 +1,17 @@
 //const express = require('express')
 import express from 'express'
 import {PORT, HOST} from './config.js'        
-import logger from './middleware/logger.js'
 import userRouter from './routers/userRouter.js'
-import productsRouter from './routers/productsRouter.js'
+import productRouter from './routers/productRouter.js'
+import logger from './middlewares/logger.js'
 
 
 const app = express()
 
 //middleware
 app.use(express.json())
-app.use(logger)
+app.use('/user', logger)
+
 
 //routes
 app.get('/', (req, res) => {
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/user', userRouter)
-app.user('/products', productsRouter)
+app.use('/products', productRouter)
 
 
 //run server

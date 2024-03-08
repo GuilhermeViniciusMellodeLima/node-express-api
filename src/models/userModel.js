@@ -1,16 +1,48 @@
-import {users} from '../db-memory/users.js'
+import {users} from '../db-memory/user.js'
 import { z } from 'zod'
 
 const userSchema = z.object({
-	id: z.number(),
-	name: z.string().min(3).max(200),
-	email: z.string().email(),
-	avatar: z.string().url()
-})
+	id: z
+    .number({
+        required_error: "ID obrigatório",
+        invalid_type_error: "ID deve ser um número"
+
+    }),
+	name: z
+    
+    .string({
+        required_error:"Name obrigatório",
+        invalid_type_error:"Name deve ser uma string"
+    })
+    .min(3, {message: 'O nome do usuário deve ter ao menos 3 lestras.'})
+    .max(200, {message: 'O nome do usuário deve ter no máximo 200 caracteres.'}),
+	email: z
+    
+    .string({
+        required_error:"Email obrigatório",
+        invalid_type_error:"Email deve ser uma string"
+
+    }).email({message: 'Email inválido.'}),
+    })
 
 const validateCreate = (user) =>{
 	const partialUserSchema = userSchema.partial({id: true})
 	return partialUserSchema.safeParse(user)
+
+}
+
+const validadeEdit = (user) =>{
+    return partialUserSchema.safeParse(user)
+}
+
+const validadeId = (id) =>{
+    const partialUserSchema = userSchema.partial({
+        name: true,
+        email: true
+    })
+
+
+    return partialUserSchema.safeParse({id})
 } 
 
 const listAll = () => {
@@ -41,4 +73,4 @@ const remove = (id) => {
     return users.filter(user => user.id !== id)
 }
 
-export default {listAll, create, edit, remove, validateCreate} 
+export default {listAll, create, edit, remove, validateCreate, validadeEdit, validadeId} 
